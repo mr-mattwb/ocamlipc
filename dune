@@ -1,0 +1,12 @@
+
+(library
+    (name ocamlipc)
+    (public_name ocamlipc)
+    (libraries unix str pcre)
+    (modules ipc)
+    (foreign_stubs 
+        (language c)
+        (names cIpc)
+        (flags -Wno-unused-variable -Wimplicit-function-declaration -D__USE_GNU -D__USE_XOPEN2KXSI -D__GNU_SOURCE -D_GNU_SOURCE))
+    )
+    

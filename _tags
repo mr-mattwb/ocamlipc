@@ -1,0 +1,5 @@
+<srcml/*.top>:  use_unix,use_str,use_dynlink,use_pcre
+<*.top>:  use_unix,use_str,use_dynlink,use_pcre
+<*.native>:  use_unix,use_str,use_dynlink,use_pcre
+<*.byte>:  use_unix,use_str,use_dynlink,use_pcre
+<*.cmo>:  use_unix,use_str,use_dynlink,use_pcre
