@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
+#define __USE_GNU
+
 #include <sys/types.h>
-#include <sys/ipc.h>
 #include <sys/errno.h>
 #include <sys/sem.h>
 #include <sys/msg.h>
@@ -175,7 +176,7 @@ CAMLprim value Val_msqid(struct msqid_ds ds)
 {
     CAMLparam0();
     CAMLlocal1(v_ds);
-    v_ds = alloc_tuple(9);
+    v_ds = caml_alloc_tuple(9);
     Store_field(v_ds, 0, Val_ipc_perms(ds.msg_perm));
     Store_field(v_ds, 1, Val_time(ds.msg_stime));
     Store_field(v_ds, 2, Val_time(ds.msg_rtime));
@@ -205,7 +206,7 @@ CAMLprim value Val_msginfo(struct msginfo info)
 {
     CAMLparam0();
     CAMLlocal1(v_info);
-    v_info = alloc_tuple(8);
+    v_info = caml_alloc_tuple(8);
     Store_field(v_info, 0, Val_int(info.msgpool));
     Store_field(v_info, 1, Val_int(info.msgmap));
     Store_field(v_info, 2, Val_int(info.msgmax));
@@ -248,7 +249,7 @@ CAMLprim value Val_shmid(struct shmid_ds ds)
 {
     CAMLparam0();
     CAMLlocal1(v_ds);
-    v_ds = alloc_tuple(8);
+    v_ds = caml_alloc_tuple(8);
     Store_field(v_ds, 0, Val_ipc_perms(ds.shm_perm));
     Store_field(v_ds, 1, Val_size(ds.shm_segsz));
     Store_field(v_ds, 2, Val_time(ds.shm_atime));
@@ -280,7 +281,7 @@ CAMLprim value Val_shminfo(struct shminfo info)
 {
     CAMLparam0();
     CAMLlocal1(v_info);
-    v_info = alloc_tuple(5);
+    v_info = caml_alloc_tuple(5);
     Store_field(v_info, 0, Val_shmUL(info.shmmax));
     Store_field(v_info, 1, Val_shmUL(info.shmmin));
     Store_field(v_info, 2, Val_shmUL(info.shmmni));
@@ -292,7 +293,7 @@ CAMLprim value Val_shm_info(struct shm_info info)
 {
     CAMLparam0();
     CAMLlocal1(v_info);
-    v_info = alloc_tuple(4);
+    v_info = caml_alloc_tuple(4);
     Store_field(v_info, 0, Val_int(info.used_ids));
     Store_field(v_info, 1, Val_shmUL(info.shm_tot));
     Store_field(v_info, 2, Val_shmUL(info.shm_rss));
@@ -435,7 +436,7 @@ CAMLprim value cipc_sem_get_all(value v_sem)
         free(un);
         unix_error(errno, "semctl()", caml_copy_string("GETALL"));
     }
-    v_ar = alloc_tuple(ds.sem_nsems);
+    v_ar = caml_alloc_tuple(ds.sem_nsems);
     for (int i = 0; i < ds.sem_nsems; ++i)
     {
         Store_field(v_ar, i, Val_int(un[i]));
@@ -664,7 +665,7 @@ CAMLprim value cipc_msg_recv(value v_mid, value v_mtype, value v_sz, value v_flg
     v_mtext = caml_alloc_string(rc);
     memcpy((char *)String_val(v_mtext), msg->mtext, rc);
 
-    v_msg = alloc_tuple(2);
+    v_msg = caml_alloc_tuple(2);
     Store_field(v_msg, 0, Val_int(msg->mtype));
     Store_field(v_msg, 1, v_mtext);
     CAMLreturn(v_msg);
