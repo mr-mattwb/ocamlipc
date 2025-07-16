@@ -635,7 +635,7 @@ CAMLprim value cipc_msg_send(value v_mid, value v_msg, value v_flgs)
     v_mtext = Field(v_msg, 1);
     int mlen = caml_string_length(v_mtext);
     int blen = mlen * sizeof(char);
-    char buf[blen];
+    char buf[blen+blen];
     msg = (struct cipc_msg *)buf;
     msg->mtype = Long_val(v_mtype);
     memcpy(msg->mtext, String_val(v_mtext), blen);
